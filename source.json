@@ -1,27 +1,31 @@
 {
-    "name":"Example Listing",
-    "id":"com.vrchat.example-listing",
+    "name":"LPD Tools",
+    "id":"com.lolipolicedepartment.tools",
     "url":"https://vrchat-community.github.io/template-package-listing/index.json",
     "author":{
-        "email":"developer@vrchat.com",
-        "name":"VRChat",
-        "url":"https://hello.vrchat.com"
+        "email":"karet@lolipolicedepartment.com",
+        "name":"LPD",
+        "url":"https://www.lolipolicedepartment.com"
     },
-    "description":"Example listing of VRChat packages",
+    "description":"Various tools made by the LPD dev team",
     "infoLink":{
-        "url":"http://github.com/vrchat-community/template-package-listing",
+        "url":"https://github.com/swiveI",
         "text":"View on GitHub"
     },
     "bannerUrl":"banner.png",
-    "githubRepos":[
-        "vrchat-community/clientsim"
-    ],
     "packages":[
         {
-            "name":"com.vrchat.udonsharp",
+            "name":"com.lolipolicedepartment.accountmanager",
             "releases":[
-                "https://github.com/vrchat-community/UdonSharp/releases/download/1.1.7/com.vrchat.UdonSharp.zip",
-                "https://github.com/vrchat-community/UdonSharp/releases/download/1.1.6/com.vrchat.UdonSharp-1.1.6.zip"
+                "https://github.com/swiveI/Account-Manager/releases/download/2.0.0/com.lolipolicedepartment.accountmanager-2.0.0.zip"
+            ]
+            "name":"com.lolipolicedepartment.gunsmith",
+            "releases":[
+                "https://github.com/swiveI/LPD-Gunsmith/releases/download/1.0.2/com.lolipolicedepartment.gunsmith-1.0.2.zip"
+            ]
+            "name":"com.lolipolicedepartment.avatar-report",
+            "releases":[
+                "https://github.com/swiveI/Avatar-Report/releases/download/0.8.0/com.lolipolicedepartment.avatar-report-0.8.0.zip"
             ]
         }
     ]
