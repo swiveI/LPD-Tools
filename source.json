@@ -29,6 +29,7 @@
         {
             "name":"com.lolipolicedepartment.avatar-report",
             "releases":[
+                "https://github.com/swiveI/Avatar-Report/releases/download/0.8.1/com.lolipolicedepartment.avatar-report-0.8.1.zip",
                 "https://github.com/swiveI/Avatar-Report/releases/download/0.8.0/com.lolipolicedepartment.avatar-report-0.8.0.zip"
             ]
         }
