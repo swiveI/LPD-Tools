@@ -19,10 +19,14 @@
             "releases":[
                 "https://github.com/swiveI/Account-Manager/releases/download/2.0.0/com.lolipolicedepartment.accountmanager-2.0.0.zip"
             ]
+        },
+        {
             "name":"com.lolipolicedepartment.gunsmith",
             "releases":[
                 "https://github.com/swiveI/LPD-Gunsmith/releases/download/1.0.2/com.lolipolicedepartment.gunsmith-1.0.2.zip"
             ]
+        },
+        {
             "name":"com.lolipolicedepartment.avatar-report",
             "releases":[
                 "https://github.com/swiveI/Avatar-Report/releases/download/0.8.0/com.lolipolicedepartment.avatar-report-0.8.0.zip"
