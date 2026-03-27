@@ -6,8 +6,8 @@
 
 *Various tools made by the LPD dev team.*
 
-[![Website](https://img.shields.io/badge/Website-8B5CF6?style=flat-square&logo=github&logoColor=white)](https://swiveI.github.io/LPD-Tools)
-[![VPM](https://img.shields.io/badge/VPM%20Listing-EC4899?style=flat-square&logo=unity&logoColor=white)](https://swiveI.github.io/LPD-Tools/index.json)
+[![Website](https://img.shields.io/badge/Website-8B5CF6?style=for-the-badge&logo=github&logoColor=white)](https://swiveI.github.io/LPD-Tools)
+[![VPM](https://img.shields.io/badge/VPM-EC4899?style=for-the-badge&logo=unity&logoColor=white)](https://swiveI.github.io/LPD-Tools/index.json)
 
 </div>
 
