@@ -4,8 +4,8 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@astrojs/react";
 
 export default defineConfig({
-  site: "https://box.pesky.zone",
-  // base: "/PeskyBox/", 
+  site: "https://swivei.github.io",
+  base: "/LPD-Tools/",
   publicDir: "public",
   outDir: "dist",
   trailingSlash: "always",

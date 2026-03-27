@@ -123,7 +123,7 @@ const packages = Object.entries(rawPackages)
   .filter((pkg): pkg is NonNullable<ReturnType<typeof processPackage>> => pkg !== null);
 
 const bannerUrl = source.bannerUrl
-  ? `/${source.bannerUrl}`
+  ? `${import.meta.env.BASE_URL}${source.bannerUrl}`
   : null;
 
 const socialLinks = [
