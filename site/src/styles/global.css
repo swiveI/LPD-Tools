@@ -1,0 +1,157 @@
+/* Satoshi font from Fontshare */
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap');
+
+@import "tailwindcss";
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.0.0/files/jetbrains-mono-latin-400-normal.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme inline {
+  --font-sans: "Satoshi", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* LPD Police Department Theme - Clean Navy & Gold */
+  --color-void: #080a1c;
+  --color-abyss: #0e1132;
+  --color-deep: #151745;
+  --color-plum: #1f2058;
+  --color-grape: #3d4080;
+  --color-electric: #f6c500;
+  --color-orchid: #f6c500;
+  --color-bloom: #ffffff;
+  --color-glow: #ffd54f;
+  --color-flash: #ff6f00;
+  --color-surface: #0e1132;
+  --color-surface-hover: #1f2058;
+  --color-border: #3d4080;
+  --color-border-subtle: #252860;
+  --color-muted: #9fa8da;
+  --color-code: #ffe082;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: transparent;
+  background-attachment: fixed;
+  color: var(--color-bloom);
+  margin: 0;
+  min-height: 100dvh;
+}
+
+::selection {
+  background: var(--color-orchid);
+  color: var(--color-void);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-orchid);
+  outline-offset: 2px;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dialog-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translate(-50%, -50%);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translate(-50%, -50%);
+  }
+}
+
+dialog[open] {
+  animation: dialog-enter 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes dialog-enter-simple {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes backdrop-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+dialog[open]#pkgModal {
+  animation: dialog-enter-simple 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+dialog[open]#pkgModal::backdrop {
+  animation: backdrop-fade 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.bird-burst-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 20;
+}
+
+.bird-particle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 12px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--color-orchid) 85%, var(--color-flash));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-orchid) 45%, transparent);
+  clip-path: polygon(0% 50%, 34% 20%, 50% 44%, 66% 20%, 100% 50%, 66% 80%, 50% 56%, 34% 80%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  animation: bird-burst var(--dur, 650ms) cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0ms) forwards;
+}
+
+@keyframes bird-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.6) rotate(0deg);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(var(--tx, 0px), var(--ty, -40px)) scale(0.2) rotate(var(--rot, 0deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bird-burst-layer,
+  .bird-particle {
+    display: none !important;
+  }
+}

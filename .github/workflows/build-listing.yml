@@ -1,12 +1,17 @@
-name: Build Repo Listing
+name: Build VPM Listing
 
 on:
-  workflow_dispatch:
   push:
-    branches: main
+    branches: [master]
+    paths:
+      - 'source.json'
+      - '.github/workflows/**'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'  # Every 6 hours
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -15,19 +20,19 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  listPublishDirectory: Website
+  listPublishDirectory: site/public
   pathToCi: ci
 
 jobs:
-  build-listing:
-    name: build-listing
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/checkout@v4
+      - name: Checkout CI runner
+        uses: actions/checkout@v4
         with:
-          repository: pimaker/package-list-action
+          repository: PiMaker/package-list-action
           path: ${{ env.pathToCi }}
           clean: false
 
@@ -36,18 +41,33 @@ jobs:
         with:
           dotnet-version: '6.0.x'
 
-      - name: Restore Cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ${{ env.pathToCi}}/.nuke/temp
-            ~/.nuget/packages
-          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
-
-      - name: Build Package Version Listing
-        run: ${{ env.pathToCi }}/build.cmd BuildMultiPackageListing --root ${{ env.pathToCi }} --list-publish-directory $GITHUB_WORKSPACE/${{ env.listPublishDirectory }}
+      - name: Build VPM Listing
+        run: chmod +x ${{ env.pathToCi }}/build.sh && ${{ env.pathToCi }}/build.sh BuildMultiPackageListing --root ${{ env.pathToCi }} --list-publish-directory $GITHUB_WORKSPACE/${{ env.listPublishDirectory }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Sync listing to Astro data
+        run: |
+          mkdir -p site/src/data
+          cp site/public/index.json site/src/data/listing.json
+
+      - name: Build Astro Site
+        run: |
+          cd site
+          npm ci
+          npm run build
+
+      - name: Copy downloads to Astro output
+        run: |
+          if [ -d "Website/downloads" ]; then
+            mkdir -p site/dist/downloads
+            cp -r Website/downloads/* site/dist/downloads/
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -55,7 +75,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ env.listPublishDirectory }}
+          path: site/dist
 
       - name: Deploy to GitHub Pages
         id: deployment
