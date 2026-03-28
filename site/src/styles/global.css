@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: "Archivo", system-ui, sans-serif;
+  --font-display: "Archivo", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* LPD theme: navy and gold */
+  --color-void: #080a1c;
+  --color-abyss: #05061a;
+  --color-electric: #f6c500;
+  --color-hot-hover: #ffd54f;
+  --color-orchid: #ffe082;
+  --color-bloom: #ffffff;
+  --color-glow: #ffd54f;
+  --color-flash: #ff6f00;
+  --color-surface: #0e1132;
+  --color-surface-hover: #1f2058;
+  --color-border: #52525b;
+  --color-muted: #a3a3a3;
+  --color-package-meta: #e5e5e5;
+}
+
+/* Headings and labels use the condensed width of Archivo */
+.font-display {
+  font-stretch: 75%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-abyss);
+  color: var(--color-bloom);
+  margin: 0;
+  min-height: 100dvh;
+}
+
+::selection {
+  background: var(--color-electric);
+  color: var(--color-void);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-electric);
+  outline-offset: 2px;
+}
+
+/* Zone tiled noise texture, color-dodge blended like the source site */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.1;
+  mix-blend-mode: color-dodge;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 120px auto;
+  background-repeat: repeat;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain-overlay {
+    display: none;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dialog-enter-simple {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes backdrop-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+dialog[open]#pkgModal {
+  animation: dialog-enter-simple 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+dialog[open]#pkgModal::backdrop {
+  animation: backdrop-fade 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --- Card surface: shared by the grid cards and the info modal --- */
+/* Layered so utilities (e.g. the modal's `fixed`) win over `position: relative`. */
+@layer components {
+  /* Tight drop shadow used instead of borders */
+  .tight-shadow {
+    box-shadow:
+      0 1px 1px rgb(0 0 0 / 0.5),
+      0 2px 3px rgb(0 0 0 / 0.45),
+      0 4px 8px rgb(0 0 0 / 0.35);
+  }
+
+  .card-surface {
+    position: relative;
+    border-radius: 9px;
+    background: var(--color-surface);
+    box-shadow:
+      0 1px 1px rgb(0 0 0 / 0.5),
+      0 2px 3px rgb(0 0 0 / 0.45),
+      0 4px 8px rgb(0 0 0 / 0.35);
+  }
+}
+
+.bird-burst-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 20;
+}
+
+.bird-particle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 12px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--color-bloom) 85%, var(--color-flash));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-orchid) 45%, transparent);
+  clip-path: polygon(0% 50%, 34% 20%, 50% 44%, 66% 20%, 100% 50%, 66% 80%, 50% 56%, 34% 80%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  animation: bird-burst var(--dur, 650ms) cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0ms) forwards;
+}
+
+@keyframes bird-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.6) rotate(0deg);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(var(--tx, 0px), var(--ty, -40px)) scale(0.2) rotate(var(--rot, 0deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bird-burst-layer,
+  .bird-particle {
+    display: none !important;
+  }
+}

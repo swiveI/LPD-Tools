@@ -1,0 +1,53 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.tsx";
+import SearchBar from "../components/SearchBar.astro";
+import PackageGrid from "../components/PackageGrid.tsx";
+import { processListing } from "../lib/packages";
+import source from "../../../source.json";
+import listing from "../data/listing.json";
+
+const packages = processListing(
+  (listing as { packages: Parameters<typeof processListing>[0] }).packages ?? {}
+);
+
+const { infoLink } = source;
+const bannerUrl = source.bannerUrl
+  ? `${import.meta.env.BASE_URL}${source.bannerUrl}`
+  : undefined;
+const socialLinks = [{ label: infoLink.text, href: infoLink.url }].filter(
+  (item) => typeof item.href === "string" && item.href.trim().length > 0
+);
+---
+
+<Layout title={source.name} description={source.description}>
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <div class="max-w-6xl mx-auto py-12 px-4 relative z-10">
+    <Hero
+      client:load
+      name={source.name}
+      description={source.description}
+      listingUrl={source.url}
+      author={source.author}
+      socials={socialLinks}
+      bannerUrl={bannerUrl}
+    />
+
+    {packages.length > 0 && <SearchBar />}
+
+    <PackageGrid client:load packages={packages} listingUrl={source.url} />
+
+    <footer class="text-center mt-12 pb-8">
+      <p class="font-sans text-sm text-white/50">
+        Powered by <a
+          href="https://vcc.docs.vrchat.com"
+          target="_blank"
+          rel="noopener"
+          class="text-[var(--color-glow)] underline underline-offset-2 hover:text-[var(--color-orchid)] transition-colors"
+          >VPM</a
+        >
+      </p>
+    </footer>
+  </div>
+</Layout>
