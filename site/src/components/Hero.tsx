@@ -104,7 +104,7 @@ export default function Hero({
         {/* LPD Shield Logo */}
         <div className="mx-auto w-20 h-20 mb-4 flex items-center justify-center drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]">
           <img
-            src={`${import.meta.env.BASE_URL}LPD Shield.png`}
+            src="/LPD-Tools/LPD Shield.png"
             alt="LPD Shield - Local Police Department logo"
             className="w-full h-full object-contain"
             loading="eager"
