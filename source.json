@@ -17,7 +17,8 @@
         "source:swiveI/Avatar-Report",
         "source:swiveI/LPD-Gunsmith",
         "source:swiveI/Account-Manager",
-        "source:swiveI/LPD-Udon-Utils"
+        "source:swiveI/LPD-Udon-Utils",
+        "source:swiveI/LPD-Prop-System"
     ],
     "packages":[
     ]
