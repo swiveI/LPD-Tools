@@ -16,7 +16,8 @@
     "githubRepos":[
         "source:swiveI/Avatar-Report",
         "source:swiveI/LPD-Gunsmith",
-        "source:swiveI/Account-Manager"
+        "source:swiveI/Account-Manager",
+        "source:swiveI/LPD-Udon-Utils"
     ],
     "packages":[
     ]
