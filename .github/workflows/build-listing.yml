@@ -51,6 +51,27 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Remove empty package metadata URLs
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+
+          const listingPath = 'site/public/index.json';
+          const listing = JSON.parse(fs.readFileSync(listingPath, 'utf8'));
+
+          for (const pkg of Object.values(listing.packages ?? {})) {
+            for (const version of Object.values(pkg?.versions ?? {})) {
+              for (const field of ['documentationUrl', 'changelogUrl']) {
+                if (typeof version?.[field] === 'string' && version[field].trim() === '') {
+                  delete version[field];
+                }
+              }
+            }
+          }
+
+          fs.writeFileSync(listingPath, `${JSON.stringify(listing)}\n`);
+          NODE
+
       - name: Sync listing to Astro data
         run: |
           mkdir -p site/src/data
